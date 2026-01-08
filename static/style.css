@@ -1,0 +1,110 @@
+/* --- 기본 설정 --- */
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    background-color: #f4f7f6; color: #333; line-height: 1.6; margin: 0; }
+a { color: #007bff; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* --- 레이아웃 --- */
+.container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+main { max-width: 1280px; margin: 20px auto; padding: 0 20px; }
+
+/* --- 섹션 관리 --- */
+#auth-section { display: none; min-height: 100vh; }
+#main-section { display: none; }
+#auth-section.active { display: flex; }
+#main-section.active { display: block; }
+.content-area { display: none; }
+.content-area.active { display: block; }
+
+/* --- 헤더 및 네비게이션 --- */
+header { background-color: #fff; padding: 20px 0; border-bottom: 1px solid #e0e0e0; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
+header .container { display: flex; justify-content: space-between; align-items: center; }
+header h1 { margin: 0; font-size: 1.8rem; color: #2c3e50; }
+header div { display: flex; align-items: center; gap: 15px; }
+nav { background-color: #34495e; padding: 15px 0; }
+nav .container { display: flex; gap: 30px; }
+nav a { color: #ecf0f1; font-weight: 500; padding: 5px 0; 
+    border-bottom: 2px solid transparent; transition: all 0.3s ease; }
+nav a.active, nav a:hover { color: #fff; border-bottom-color: #3498db; }
+
+/* --- 콘텐츠 카드 --- */
+.card { background-color: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); 
+    margin-bottom: 20px; width: 100%; box-sizing: border-box; }
+.card h2 { margin-top: 0; color: #34495e; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 20px; }
+.card h3 { margin-top: 30px; } /* 전체 기록 제목 위 간격 */
+
+/* --- 홈 탭 가로 배치 --- */
+.home-layout { display: flex; gap: 30px; align-items: flex-start; }
+.input-column { flex: 1; }
+.result-column { flex: 1; position: sticky; top: 20px; }
+
+/* --- 입력 요소 --- */
+.input-group, .slider-group { margin-bottom: 20px; }
+.input-group label, .slider-group label { display: block; margin-bottom: 8px; font-weight: 500; }
+textarea { width: 100%; padding: 12px; border: 1px solid #ccc; 
+    border-radius: 8px; font-size: 1rem; box-sizing: border-box; transition: border-color 0.3s; }
+textarea:focus { outline: none; border-color: #007bff; }
+input[type="range"] { width: 100%; cursor: pointer; }
+.slider-group { display: flex; flex-wrap: wrap; align-items: center; }
+.slider-group label { flex-basis: 100%; }
+.slider-group input { flex-grow: 1; }
+.slider-group .slider-value { margin-left: 15px; font-weight: bold; color: #007bff; min-width: 50px; }
+
+/* --- 버튼 --- */
+button { background-color: #007bff; color: white; border: none; padding: 12px 20px; 
+    border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: 500; transition: background-color 0.3s; }
+button:hover:not(:disabled) { background-color: #0056b3; } /* 비활성화 시 호버 효과 제거 */
+button:disabled { background-color: #ced4da; cursor: not-allowed; } /* 비활성화 스타일 */
+
+.button-wrapper { text-align: center; margin-top: 10px; }
+#logout-btn { background-color: #6c757d; }
+#logout-btn:hover { background-color: #5a6268; }
+#start-chatbot-btn { display: block; margin: 20px auto; }
+
+/* --- 결과 및 기록 --- */
+.result-box { background-color: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 20px; margin-top: 0; }
+.result-box ul.challenge-list { list-style-type: none; padding-left: 0; }
+.result-box ul li { margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+.result-box ul li a { flex-grow: 1; margin-right: 10px; } /* 링크 영역 확보 */
+.result-box ul li.activity-challenge { color: #333; flex-grow: 1; margin-right: 10px; }
+
+/* 피드백 버튼 스타일 */
+.feedback-buttons { display: inline-flex; gap: 5px; }
+.feedback-btn { padding: 3px 8px; font-size: 0.9rem; line-height: 1; min-width: 40px; 
+    background-color: #e9ecef; color: #495057; border: 1px solid #ced4da; border-radius: 4px; /* 버튼 모서리 둥글게 */ 
+    cursor: pointer; transition: background-color 0.2s, border-color 0.2s; }
+.feedback-btn:hover:not(:disabled) { background-color: #ced4da; }
+.feedback-btn.like:hover:not(:disabled) { background-color: #a3d9a5; border-color: #8fd19e; } /* 초록색 톤 */
+.feedback-btn.dislike:hover:not(:disabled) { background-color: #f1b0b7; border-color: #eca3ae; } /* 빨간색 톤 */
+.feedback-btn.selected { /* 선택 시 기본 스타일 제거 가능 */ }
+.feedback-btn.selected.like { background-color: #28a745; color: white; border-color: #28a745; } /* 선택 시 진한 초록 */
+.feedback-btn.selected.dislike { background-color: #dc3545; color: white; border-color: #dc3545; } /* 선택 시 진한 빨강 */
+.feedback-btn:disabled { opacity: 0.7; cursor: not-allowed; } /* 비활성화 시 약간 투명하게 */
+
+
+/* 피드백 완료 상태 텍스트 */
+.feedback-status { font-size: 0.9rem; color: #6c757d; font-style: italic; margin-left: 5px; } /* 왼쪽에 약간 간격 추가 */
+
+#history-list { list-style-type: none; padding: 0; }
+.history-item { background-color: #f8f9fa; border-radius: 5px; margin-bottom: 8px; 
+    border-left: 4px solid #007bff; cursor: pointer; transition: background-color 0.2s; }
+.history-item:hover { background-color: #e9ecef; }
+.history-summary { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; }
+.toggle-icon { transition: transform 0.3s ease; }
+.history-item.expanded .toggle-icon { transform: rotate(180deg); }
+.history-text { display: none; padding: 0 15px 15px 15px; margin: 0 15px; border-top: 1px solid #ddd; color: #555; }
+.history-text p { white-space: pre-wrap; margin-bottom: 10px;}
+.history-text h5 { margin-top: 15px; margin-bottom: 5px; font-size: 0.95rem; color: #34495e;}
+.history-text ul { list-style-type: disc; padding-left: 20px; margin-top: 0;}
+.history-text ul li { margin-bottom: 3px; font-size: 0.9rem; }
+.history-item.expanded .history-text { display: block; }
+
+/* --- 챗봇 --- */
+#chatbot-qna .question { font-weight: bold; margin-bottom: 15px; }
+#chatbot-qna .options { display: flex; flex-direction: column; gap: 10px; }
+#chatbot-qna .options button { background-color: #e9ecef; color: #333; width: 100%; 
+    text-align: left; padding: 10px 15px; border-radius: 6px; } /* 패딩과 둥근 모서리 추가 */
+#chatbot-qna .options button:hover { background-color: #ced4da; }
+.hospital-info { margin-top: 15px; padding: 10px; background-color: #fff3cd; 
+    border-left: 4px solid #ffeeba; color: #856404; border-radius: 4px; } /* 둥근 모서리 추가 */

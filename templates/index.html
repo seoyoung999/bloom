@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마음 챌린지</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <!-- 인증 섹션: 로그인/회원가입 -->
+    <section id="auth-section" class="active bg-gray-100 flex items-center justify-center">
+        <div class="w-full max-w-md">
+            <!-- 로그인 폼 -->
+            <div id="login-form">
+                <form id="login-form-tag" class="bg-white rounded-xl shadow-lg p-8 space-y-4">
+                    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">로그인</h2>
+                    <div>
+                        <label for="login-id" class="block text-sm font-medium text-gray-700">아이디</label>
+                        <input type="text" id="login-id" name="username" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label for="login-pw" class="block text-sm font-medium text-gray-700">비밀번호</label>
+                        <input type="password" id="login-pw" name="password" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div id="login-error" class="text-red-600 text-sm text-center min-h-[1.25rem]"></div>
+                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        로그인
+                    </button>
+                    <p class="mt-6 text-center text-sm text-gray-600">
+                        계정이 없으신가요? <a href="#" id="show-register" class="font-medium text-indigo-600 hover:text-indigo-500">회원가입</a>
+                    </p>
+                </form>
+            </div>
+            <!-- 회원가입 폼 (기본 숨김) -->
+            <div id="register-form" style="display: none;">
+                <form id="register-form-tag" class="bg-white rounded-xl shadow-lg p-8 space-y-4">
+                    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">회원가입</h2>
+                    <!-- 아이디 -->
+                    <div>
+                        <label for="username" class="block text-sm font-medium text-gray-700">아이디</label>
+                        <input type="text" id="username" name="username" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <!-- 비밀번호 -->
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700">비밀번호</label>
+                        <input type="password" id="password" name="password" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <!-- 이름 -->
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700">이름</label>
+                        <input type="text" id="name" name="name" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <!-- 생년월일 -->
+                    <div>
+                        <label for="birthdate" class="block text-sm font-medium text-gray-700">생년월일</label>
+                        <input type="date" id="birthdate" name="birthdate" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <!-- 성별 -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">성별</label>
+                        <div class="mt-2 flex items-center space-x-6">
+                            <label class="inline-flex items-center"><input type="radio" name="gender" value="male" required class="form-radio text-indigo-600"><span class="ml-2 text-gray-700">남성</span></label>
+                            <label class="inline-flex items-center"><input type="radio" name="gender" value="female" class="form-radio text-indigo-600"><span class="ml-2 text-gray-700">여성</span></label>
+                        </div>
+                    </div>
+                    <!-- 지역 -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="region_si_do" class="block text-sm font-medium text-gray-700">시/도</label>
+                            <select id="region_si_do" name="region_si_do" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                <option value="서울">서울특별시</option><option value="부산">부산광역시</option><option value="대구">대구광역시</option><option value="인천">인천광역시</option><option value="광주">광주광역시</option><option value="대전">대전광역시</option><option value="울산">울산광역시</option><option value="세종">세종특별자치시</option><option value="경기">경기도</option><option value="강원">강원도</option><option value="충북">충청북도</option><option value="충남">충청남도</option><option value="전북">전라북도</option><option value="전남">전라남도</option><option value="경북">경상북도</option><option value="경남">경상남도</option><option value="제주">제주특별자치도</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="region_gu" class="block text-sm font-medium text-gray-700">구/군/시</label>
+                            <input type="text" id="region_gu" name="region_gu" required placeholder="예: 강남구" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                    </div>
+                    <div id="register-error" class="text-red-600 text-sm text-center min-h-[1.25rem]"></div>
+                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">회원가입</button>
+                    <p class="mt-6 text-center text-sm text-gray-600">이미 계정이 있으신가요? <a href="#" id="show-login" class="font-medium text-indigo-600 hover:text-indigo-500">로그인으로 돌아가기</a></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 메인 앱 섹션 (기본 숨김) -->
+    <div id="main-section" style="display: none;">
+        <header>
+            <div class="container">
+                <h1>마음 챌린지</h1>
+                <div>
+                    <span id="username-display"></span>
+                    <button id="logout-btn">로그아웃</button>
+                </div>
+            </div>
+        </header>
+        <nav>
+            <div class="container">
+                <a href="#" id="nav-home" class="active">오늘의 기록</a>
+                <a href="#" id="nav-history">나의 기록</a>
+                <a href="#" id="nav-chatbot">우울증 진단</a>
+            </div>
+        </nav>
+        
+        <main>
+            <div id="home-content" class="content-area active">
+                <div class="card">
+                    <div class="home-layout">
+                        <!-- 왼쪽: 입력 영역 -->
+                        <div class="input-column">
+                            <h2>오늘의 마음 상태</h2>
+                            <p>슬라이더와 텍스트로 오늘 하루를 기록해주세요.</p>
+                            <div class="slider-group">
+                                <label for="mood-slider">오늘 기분 (0-10)</label>
+                                <input type="range" id="mood-slider" min="0" max="10" value="5">
+                                <span class="slider-value">5</span>
+                            </div>
+                            <div class="slider-group">
+                                <label for="sleep-slider">수면 시간 (0-12시간)</label>
+                                <input type="range" id="sleep-slider" min="0" max="12" value="6">
+                                <span class="slider-value">6시간</span>
+                            </div>
+                            <div class="slider-group">
+                                <label for="activity-slider">활동량 (0-10)</label>
+                                <input type="range" id="activity-slider" min="0" max="10" value="5">
+                                <span class="slider-value">5</span>
+                            </div>
+                            <div class="input-group">
+                                <label for="feeling-text">오늘의 감정 기록</label>
+                                <textarea id="feeling-text" rows="4" placeholder="오늘 하루는 어땠나요? 자유롭게 감정을 기록해보세요."></textarea>
+                            </div>
+                            <div class="button-wrapper">
+                                <button id="analyze-btn">분석하기</button>
+                            </div>
+                        </div>
+
+                        <!-- 오른쪽: 결과 표시 영역 -->
+                        <div class="result-column">
+                             <div id="analysis-result" class="result-box" style="display: none;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="history-content" class="content-area">
+                <div class="card">
+                    <h2>나의 감정 변화</h2>
+                    <canvas id="emotion-chart"></canvas>
+                    <h3>전체 기록</h3>
+                    <ul id="history-list"></ul>
+                </div>
+            </div>
+
+            <div id="chatbot-content" class="content-area">
+                <div class="card">
+                    <h2>우울증 자가 진단 (PHQ-9)</h2>
+                    <!-- ID 추가: 챗봇 시작 시 숨기기 위함 -->
+                    <p id="chatbot-intro">최근 2주 동안 아래와 같은 문제를 얼마나 자주 겪었는지 선택해주세요.</p>
+                    <button id="start-chatbot-btn">진단 시작하기</button>
+                    <div id="chatbot-qna"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
